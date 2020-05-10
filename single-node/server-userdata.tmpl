@@ -1,0 +1,70 @@
+#! /bin/bash
+# Instructions say we need docker.
+curl https://releases.rancher.com/install-docker/18.09.sh | sh
+sudo usermod -aG docker ubuntu
+
+# Prepare kubectl for root
+sudo mkdir ~root/.kube
+sudo chmod 750 ~root/.kube
+
+# Basic install of k3s.
+# Don't install treafik ingress as external lb health checks fail because hostname cannot be passed through.
+curl -sfL https://get.k3s.io | sh -s - server \
+--datastore-endpoint="mysql://admin:${pwd}@tcp(${host}:3306)/k3s"
+
+sudo snap install helm --classic
+
+# Wait for k3s.yaml to appear
+while ! sudo [ -e /etc/rancher/k3s/k3s.yaml ]
+do 
+  sleep 5
+done
+
+# Allow root to have superuser over the cluster:
+sudo cp /etc/rancher/k3s/k3s.yaml ~root/.kube/config
+
+# Wait for all kube-system deployments to roll out
+for d in $(sudo kubectl get deploy -n kube-system --no-headers -o name)
+do 
+  sudo kubectl -n kube-system rollout status $d
+done
+
+sudo kubectl get all --all-namespaces
+sudo kubectl get nodes
+
+# Add helm repos, etc:
+sudo helm repo add rancher-${helm-repo} https://releases.rancher.com/server-charts/${helm-repo}
+sudo helm repo add jetstack https://charts.jetstack.io
+sudo helm repo update
+
+# finally how does k3s look?
+sudo kubectl get nodes
+sudo kubectl get pods --all-namespaces
+
+# Stuff that should be run just once in the cluster:
+echo "Setting up rancher..."
+
+# Install cert-manager:
+sudo kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.12/deploy/manifests/00-crds.yaml
+sudo kubectl create namespace cert-manager
+sudo helm install cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --version v0.12.0
+
+# Wait for all cert manager deployments to roll out
+for d in $(sudo kubectl get deploy -n cert-manager --no-headers -o name)
+do
+    sudo kubectl -n cert-manager rollout status $d
+done
+
+sleep 10 # to be sure to be sure
+sudo kubectl get pods -n cert-manager
+
+# Rancher install:
+sudo kubectl create namespace cattle-system
+sudo helm install rancher rancher-${helm-repo}/rancher  \
+  --namespace cattle-system  \
+  --set hostname=${dns-name}
+
+# Wait for rancher to roll out
+sudo kubectl -n cattle-system rollout status deploy/rancher
