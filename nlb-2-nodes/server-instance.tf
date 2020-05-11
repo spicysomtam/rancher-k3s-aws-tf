@@ -20,6 +20,7 @@ resource "aws_instance" "k3s" {
   count = var.num-servers
   iam_instance_profile = aws_iam_instance_profile.k3s-server.name
   key_name = var.key-pair
+  availability_zone = data.aws_availability_zones.available.names[count.index]
   security_groups = [aws_security_group.k3s.name]
   user_data = templatefile("server-userdata.tmpl", { 
     pwd = var.mysql-password, 
