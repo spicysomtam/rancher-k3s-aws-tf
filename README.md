@@ -25,7 +25,7 @@ curl -H Host:rancher.yourdomain http://aws-lb-dns-name
 
 The NLB takes alot of time for the load balancer to be deployed, and then for the targets to come healthy. If you use a classic ELB instead, its much faster to deploy the load balancer and targets come healthy much quicker. 
 
-You may wonder why I chose to use an NLB? The answer is the ELB is called by AWS previous generation AWS intended for AWS Classic (precusor to vpc's), and you should use an NLB or Application Load Balancer (ALB) instead. I am not sure how long aws will keep the classic ELB, so thus I opted for the NLB.
+You may wonder why I chose to use an NLB? The answer is the ELB is called by AWS *previous generation* intended for AWS Classic (precusor to vpc's), and you should use an NLB or Application Load Balancer (ALB) instead. I am not sure if AWS will retire ELBs at some point?
 
 # Terraform
 
