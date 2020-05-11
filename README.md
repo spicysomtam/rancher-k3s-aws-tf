@@ -1,6 +1,6 @@
 # Aim
 
-To implement rancher 2.4.3 k3s install on aws using terraform, following the rancher k3s instructions [Installing Rancher on a Kubernetes Cluster](https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/). The instructions say that you should use an AWS Network Load Balancer (NLB), and provides instructions [here](https://rancher.com/docs/rancher/v2.x/en/installation/options/nlb/). My plan was to implement a two node k3s configuration behind an AWS NLB, which is an ideal, minimal k3s configuration with fault tolerance.
+To implement rancher 2.4.3 k3s install on aws using terraform, following the rancher k3s instructions [Installing Rancher on a Kubernetes Cluster](https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/). The instructions say that you should use an AWS Network Load Balancer (NLB), and provides instructions [here](https://rancher.com/docs/rancher/v2.x/en/installation/options/nlb/). My plan was to implement a two node k3s configuration behind an AWS load balancer, which is an ideal, minimal k3s configuration with fault tolerance.
 
 # Issue with an AWS Network Load Balancer and 3ks
 
@@ -21,11 +21,9 @@ I reported the issue [here](https://github.com/rancher/rancher/issues/26977). Tr
 curl -H Host:rancher.yourdomain http://aws-lb-dns-name
 ```
 
-## AWS ELB classic load balancer is probably a better solution?
+## AWS ELB classic load balancer is a better solution
 
-The NLB takes alot of time for the load balancer to be deployed, and then for the targets to come healthy. If you use a classic ELB instead, its much faster to deploy the load balancer and targets come healthy much quicker. 
-
-You may wonder why I chose to use an NLB? The answer is the ELB is called by AWS *previous generation* intended for AWS Classic (precusor to vpc's), and you should use an NLB or Application Load Balancer (ALB) instead. I am not sure if AWS will retire ELBs at some point?
+The NLB takes alot of time for the load balancer to be deployed, and then for the targets to come healthy. If you use a classic ELB instead, its much faster to deploy the load balancer and targets come healthy much quicker. Thus I created two deploys; one using an nlb and the other using an elb. While AWS considers the elb to legacy tech that should be replace by an alb, I believe the alb to be overkill for a simple tcp load balancer. Thus I would recommend the elb deploy rather than the nlb deploy.
 
 # Terraform
 
@@ -69,3 +67,7 @@ As a result of the issues with treafik, I decided to implement a single node dep
 ### NLB with 2 nodes
 
 This is the k3s minimum fault tolerant configuration recommended by rancher. You will find this deploy in the `nlb-2-nodes` sub directory.
+
+### ELB with 2 nodes
+
+This is the k3s minimum fault tolerant configuration recommended by rancher, but using an ELB rather than an NLB. You will find this deploy in the `elb-2-nodes` sub directory. This is the fault tolerant deploy I recommend.

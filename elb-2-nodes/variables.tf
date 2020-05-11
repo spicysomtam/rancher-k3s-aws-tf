@@ -55,5 +55,5 @@ variable "rancher-helm-repo" {
 }
 
 variable "rancher-dns-name" {
-  default = "rancher.mydomain.com"
+  default = "rancher.alastair-munro.com"
 }
