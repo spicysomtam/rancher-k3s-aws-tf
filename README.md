@@ -35,7 +35,7 @@ Adapt the settings in `variables.tf` to your requirements. Important ones:
 
 * rancher-dns-name - dns name for your rancher.
 * aws_region - aws region (default eu-west-1).
-* key-pair - ec2 ssh keypair to use. So you can ssh into the ec2 instances for troubleshooting, etc.
+* key-pair - already defined ec2 ssh keypair to use. So you can ssh into the ec2 instances for troubleshooting, etc.
 * nlb-internal - whether nlb is internal (true or false; default false).
 
 ## DNS for the rancher url

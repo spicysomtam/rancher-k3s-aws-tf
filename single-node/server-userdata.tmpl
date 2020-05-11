@@ -8,7 +8,6 @@ sudo mkdir ~root/.kube
 sudo chmod 750 ~root/.kube
 
 # Basic install of k3s.
-# Don't install treafik ingress as external lb health checks fail because hostname cannot be passed through.
 curl -sfL https://get.k3s.io | sh -s - server \
 --datastore-endpoint="mysql://admin:${pwd}@tcp(${host}:3306)/k3s"
 
