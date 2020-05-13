@@ -7,12 +7,6 @@ variable "aws_region" {
   default     = "eu-west-1"
 }
 
-variable "vpc-subnets" {
-  description = "vpc number of subnets/az's."
-  default     = "3"
-  type        = string
-}
-
 variable "inst-type" {
   description = "k3s server instance type."
   default     = "t3a.medium"
