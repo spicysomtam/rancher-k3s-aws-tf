@@ -2,7 +2,7 @@
 
 To implement rancher 2.4.3 k3s install on aws using terraform, following the rancher k3s instructions [Installing Rancher on a Kubernetes Cluster](https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/). The instructions say that you should use an AWS Network Load Balancer (NLB), and provides instructions [here](https://rancher.com/docs/rancher/v2.x/en/installation/options/nlb/). My plan was to implement a two node k3s configuration behind an AWS load balancer, which is an ideal, minimal k3s configuration with fault tolerance.
 
-# Issue with an AWS Network Load Balancer and 3ks
+# Issue with an AWS Network Load Balancer and k3s
 
 ## Incorrect rancher instructions for k3s
  
