@@ -2,14 +2,13 @@ pipeline {
 
    parameters {
     choice(name: 'action', choices: 'create\ndestroy', description: 'Create/update or destroy stack.')
-    choice(name: 'deploy', choices: 'single-node\nelb-2-nodes\nnlb-2-nodes', description: 'Deployment type.')
+    choice(name: 'deploy', choices: 'single-node\nnlb-2-nodes', description: 'Deployment type.')
     string(name: 'prefix', defaultValue : '', description: "Prefix for AWS resources so you can create multiple stacks.")
     string(name: 'ec2_instance_type', defaultValue : 't3a.medium', description: "k8s node instance type.")
     string(name: 'ec2_key_pair', defaultValue : 'spicysomtam-aws4', description: "k8s node ssh keypair.")
     string(name: 'url_ingress_cidrs', defaultValue : '0.0.0.0/0', description: "rancher url ingress cidrs; space delimited list.")
     string(name: 'ssh_ingress_cidrs', defaultValue : '0.0.0.0/0', description: "server ssh ingress cidrs; space delimited list.")
     string(name: 'mysql_instance_type', defaultValue : 'db.t2.micro', description: "mysql db instance type.")
-    string(name: 'mysql_password', defaultValue : 'ajzk8(Lpmz', description: "Mysql password.")
     choice(name: 'helm_repo', choices: 'latest\nstable\nalpha', description: 'In essence, release of rancher to install.')
     string(name: 'rancher_dns_name', defaultValue : 'rancher.alastair-munro.com', description: "The dns name for your rancher.")
     string(name: 'credential', defaultValue : 'jenkins', description: "Jenkins credential that provides the AWS access key and secret.")
@@ -63,14 +62,13 @@ pipeline {
               terraform plan \
                 -var prefix=${params.prefix} \
                 -var aws_region=${params.region} \
-                -var inst-type=${params.ec2_instance_type} \
-                -var 'rancher-ingress-cidrs=${ingress}' \
-                -var 'ssh-ingress-cidrs=${ssh_ingress}' \
-                -var key-pair=${params.ec2_key_pair} \
-                -var mysql-password='${params.mysql_password}' \
-                -var mysql-instance-class=${params.mysql_instance_type} \
-                -var rancher-helm-repo=${params.helm_repo} \
-                -var rancher-dns-name=${params.rancher_dns_name} \
+                -var ec2_inst_type=${params.ec2_instance_type} \
+                -var 'rancher_ingress_cidrs=${ingress}' \
+                -var 'ssh_ingress_cidrs=${ssh_ingress}' \
+                -var key_pair=${params.ec2_key_pair} \
+                -var mysql_inst_type=${params.mysql_instance_type} \
+                -var rancher_helm_repo=${params.helm_repo} \
+                -var rancher_dns_name=${params.rancher_dns_name} \
                 -out ${plan}
             """
           }
@@ -121,6 +119,7 @@ pipeline {
 
             sh """
               cd ${params.deploy}
+              terraform init
               terraform workspace select ${params.prefix}
               terraform destroy -auto-approve
             """

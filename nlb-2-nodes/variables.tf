@@ -7,59 +7,56 @@ variable "aws_region" {
   default     = "eu-west-1"
 }
 
-variable "inst-type" {
+variable "ec2_inst_type" {
   description = "k3s server instance type."
   default     = "t3a.medium"
-  type        = string
 }
 
 variable "prefix" {
   description = "Prefix for deploy for aws resources`."
-  default     = "r1"
-  type        = string
 }
 
-variable "num-servers" {
+variable "num_servers" {
   description = "Number of k3s server instances to deploy."
   default = "2"
-  type    = string
 }
 
 # flag to set if its internal is true or false
-variable "nlb-internal" {
+variable "lb_internal" {
   default = false
   type = bool
 }
 
-variable "lb-ingress-cidrs" {
-  description = "External ips allowed access to k3s servers via the lb."
+# Allowing access from everything is probably not secure; so please override this to your requirement.
+variable "rancher_ingress_cidrs" {
+  description = "External ips allowed access to rancher."
   default     = ["0.0.0.0/0"]
   type        = list(string)
 }
 
-variable "ssh-ingress-cidrs" {
+# Allowing access from everything is probably not secure; so please override this to your requirement.
+variable "ssh_ingress_cidrs" {
   description = "External ips allowed access to k3s servers via ssh."
   default     = ["0.0.0.0/0"]
   type        = list(string)
 }
 
-variable "key-pair" {
-  default = "my-key-pair"
-  type    = string
+variable "key_pair" {
+  default = "my-keypair"
 }
 
-variable "mysql-password" {
-  default = "ajzk8(Lpmz"
-}
-
-variable "mysql-instance-class" {
+variable "mysql_inst_type" {
   default = "db.t2.micro"
 }
 
-variable "rancher-helm-repo" {
+variable "mysql_username" {
+  default = "admin"
+}
+
+variable "rancher_helm_repo" {
   default = "latest"
 }
 
-variable "rancher-dns-name" {
+variable "rancher_dns_name" {
   default = "rancher.mydomain.com"
 }

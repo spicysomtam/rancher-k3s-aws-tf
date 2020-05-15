@@ -12,9 +12,9 @@ resource "aws_lb_target_group" "https" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "k3s-https" {
+resource "aws_lb_target_group_attachment" "k3s_https" {
   target_group_arn = aws_lb_target_group.https.arn
   target_id        = aws_instance.k3s[count.index].id
-  count = var.num-servers
+  count = var.num_servers
   port             = 443
 }

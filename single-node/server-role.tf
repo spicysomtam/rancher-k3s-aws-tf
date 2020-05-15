@@ -1,10 +1,10 @@
 
-resource "aws_iam_instance_profile" "k3s-server" {
+resource "aws_iam_instance_profile" "k3s_server" {
   name = "${var.prefix}-RancherServerProfile"
-  role = aws_iam_role.k3s-server.name
+  role = aws_iam_role.k3s_server.name
 }
 
-resource "aws_iam_role" "k3s-server" {
+resource "aws_iam_role" "k3s_server" {
   name = "${var.prefix}-RancherServer"
   assume_role_policy = <<EOF
 {
@@ -23,7 +23,7 @@ resource "aws_iam_role" "k3s-server" {
 EOF
 }
 
-resource "aws_iam_policy" "k3s-server" {
+resource "aws_iam_policy" "k3s_server" {
   name = "${var.prefix}-RancherServer"
   policy = <<EOF
 {
@@ -103,7 +103,7 @@ resource "aws_iam_policy" "k3s-server" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "k3s-server" {
-  role        = aws_iam_role.k3s-server.name
-  policy_arn  = aws_iam_policy.k3s-server.arn
+resource "aws_iam_role_policy_attachment" "k3s_server" {
+  role        = aws_iam_role.k3s_server.name
+  policy_arn  = aws_iam_policy.k3s_server.arn
 }

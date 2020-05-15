@@ -12,9 +12,9 @@ resource "aws_lb_target_group" "http" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "k3s-http" {
+resource "aws_lb_target_group_attachment" "k3s_http" {
   target_group_arn = aws_lb_target_group.http.arn
-  target_id        = aws_instance.k3s[count.index].id
-  count = var.num-servers
-  port             = 80
+  target_id = aws_instance.k3s[count.index].id
+  count = var.num_servers
+  port  = 80
 }

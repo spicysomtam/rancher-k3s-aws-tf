@@ -21,10 +21,6 @@ I reported the issue [here](https://github.com/rancher/rancher/issues/26977). Tr
 curl -H Host:rancher.yourdomain http://aws-lb-dns-name
 ```
 
-## AWS ELB classic load balancer is a better solution
-
-The NLB takes alot of time for the load balancer to be deployed, and then for the targets to come healthy. If you use a classic ELB instead, its much faster to deploy the load balancer and targets come healthy much quicker. Thus I created two deploys; one using an nlb and the other using an elb. While AWS considers the elb to legacy tech that should be replace by an alb, I believe the alb to be overkill for a simple tcp load balancer. Thus I would recommend the elb deploy rather than the nlb deploy.
-
 # Terraform
 
 ## Settings
@@ -57,7 +53,7 @@ Finally we need to wait for the targets to become healthy in the NLB, which can 
 
 Thus, when terraform has completed rolling out the stack, rancher is still being rolled out and the dns is still propogating. Thus give 5 minutes or so before trying to connect to rancher.
 
-## Installs into default vpc
+## Installs into the default vpc
 
 To keep things simple, the deploys are deployed into the default vpc. If you require a specific vpc, consider adapting `vpc.tf`, and adding a variable for it.
 
@@ -73,10 +69,6 @@ As a result of the issues with treafik, I decided to implement a single node dep
 
 This is the k3s minimum fault tolerant configuration recommended by rancher. You will find this deploy in the `nlb-2-nodes` sub directory.
 
-### ELB with 2 nodes
-
-This is the k3s minimum fault tolerant configuration recommended by rancher, but using an ELB rather than an NLB. You will find this deploy in the `elb-2-nodes` sub directory. This is the fault tolerant deploy I recommend.
-
 ## Prefix
 
 I introduced a prefix for aws resource names. This allows you to deploy multiple stacks in the same aws account, using different prefixes. 
@@ -84,6 +76,10 @@ I introduced a prefix for aws resource names. This allows you to deploy multiple
 You can also mix the deployment types deployed, as long as the prefix is unique.
 
 You probably want to keep the prefix as short as possible; maybe 2 or 3 characters.
+
+## Wait for rancher health check to pass
+
+The deploys will wait for the health check for rancher to return `ok`. This may take 6 minutes or so, so be patient!
 
 # Jenkins pipeline
 

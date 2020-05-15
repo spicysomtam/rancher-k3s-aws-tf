@@ -15,23 +15,24 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "k3s" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.inst-type
-  count = var.num-servers
-  iam_instance_profile = aws_iam_instance_profile.k3s-server.name
-  key_name = var.key-pair
+  ami = data.aws_ami.ubuntu.id
+  instance_type = var.ec2_inst_type
+  count = var.num_servers
+  iam_instance_profile = aws_iam_instance_profile.k3s_server.name
+  key_name = var.key_pair
   availability_zone = data.aws_availability_zones.available.names[count.index]
   security_groups = [aws_security_group.k3s.name]
+
   user_data = templatefile("server-userdata.tmpl", { 
-    pwd = var.mysql-password, 
+    pwd = random_password.mysql_password.result, 
     host = aws_db_instance.k3s.address, 
-    helm-repo = var.rancher-helm-repo, 
-    dns-name = var.rancher-dns-name,
+    helm-repo = var.rancher_helm_repo, 
+    dns-name = var.rancher_dns_name,
     inst-id = count.index
   })
-  depends_on = [ aws_db_instance.k3s, aws_security_group.k3s-mysql ]
+  depends_on = [ aws_db_instance.k3s, aws_security_group.k3s_mysql ]
 
   tags = {
-    Name = "${var.prefix}-RancherS${count.index}"
+    Name = "${var.prefix}-Rancher${count.index}"
   }
 }

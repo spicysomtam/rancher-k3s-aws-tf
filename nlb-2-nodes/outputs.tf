@@ -1,5 +1,5 @@
 output "rancher_url" {
-  value = "https://${var.rancher-dns-name}"
+  value = "https://${var.rancher_dns_name}"
 }
 
 output "servers_public_ips" {
@@ -7,9 +7,21 @@ output "servers_public_ips" {
 }
 
 output "server_ssh_key" {
-  value = var.key-pair
+  value = var.key_pair
 }
 
 output "lb_dns_name" {
-  value = aws_lb.lb.dns_name       
+  value = aws_lb.lb.dns_name
+}
+
+output "mysql_username" {
+  value = var.mysql_username
+}
+
+output "mysql_password" {
+  value = random_password.mysql_password.result
+}
+
+output "deployment_prefix" {
+  value = var.prefix
 }
