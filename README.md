@@ -1,6 +1,6 @@
 # Aim
 
-To implement rancher 2.4.3 k3s install on aws using terraform, following the rancher k3s instructions [Installing Rancher on a Kubernetes Cluster](https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/). The instructions say that you should use an AWS Network Load Balancer (NLB), and provides instructions [here](https://rancher.com/docs/rancher/v2.x/en/installation/options/nlb/). My plan was to implement a two node k3s configuration behind an AWS load balancer, which is an ideal, minimal k3s configuration with fault tolerance.
+To implement rancher 2.4.3 k3s install on aws using terraform, following the rancher k3s instructions [Installing Rancher on a Kubernetes Cluster](https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/). The instructions say that you should use an AWS Network Load Balancer (NLB), and provides instructions [here](https://rancher.com/docs/rancher/v2.x/en/installation/options/nlb/). My plan was to implement a two node k3s configuration behind an AWS load balancer, which is an ideal, minimal k3s configuration with fault tolerance. I also provide a single node deploy, which is perfect for development, etc.
 
 # Issue with an AWS Network Load Balancer and k3s
 
@@ -91,4 +91,6 @@ Since Jenkins keeps previous builds, you can see what has been created/destroyed
 
 A prequisite for deploying via Jenkins is for the terraform binary to be installed in the Jenkins server. 
 
-This is a fairly simple deploy; trying to keep things simple. You could adapt it to use different Jenkins agents or even use the terraform Jenkins plugin. Feel free to adapt to your needs via a github fork, etc. If you want to be really cool, deploy jenkins as a k8s service and then use k8s cloud agents!
+This is a fairly simple deploy; trying to keep things simple. You could adapt it to use different Jenkins agents or even use the terraform Jenkins plugin. Feel free to adapt to your needs via a github fork, etc. 
+
+If you want to be really cool, deploy jenkins as a k8s deployment and then use k8s cloud agents!
