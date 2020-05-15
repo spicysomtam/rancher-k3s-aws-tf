@@ -1,5 +1,5 @@
 resource "aws_elb" "lb" {
-  name              = "rancher"
+  name              = "${var.prefix}-rancher"
   subnets           = data.aws_subnet_ids.default.ids
   internal          = var.nlb-internal
 
@@ -32,6 +32,6 @@ resource "aws_elb" "lb" {
   connection_draining_timeout = 400
 
   tags = {
-    Name = "rancher"
+    Name = "${var.prefix}-rancher"
   }
 }

@@ -1,5 +1,5 @@
 resource "aws_lb_target_group" "http" {
-  name     = "rancher-tcp-80"
+  name     = "${var.prefix}-rancher-tcp-80"
   port     = 80
   protocol = "TCP"
   target_type = "instance"

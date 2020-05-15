@@ -2,10 +2,14 @@ output "rancher_url" {
   value = "https://${var.rancher-dns-name}"
 }
 
-output "k3s_server_public_ips" {
+output "servers_public_ips" {
   value = [aws_instance.k3s.*.public_ip]
 }
 
-output "k3s_ssh_key" {
+output "server_ssh_key" {
   value = var.key-pair
+}
+
+output "lb_dns_name" {
+  value = aws_lb.lb.dns_name       
 }

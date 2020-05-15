@@ -4,8 +4,8 @@ resource "aws_db_instance" "k3s" {
   engine               = "mysql"
   engine_version       = "5.7.22"
   instance_class       = var.mysql-instance-class
-  name                 = "k3s"
-  identifier           = "k3s"
+  name                 = "${var.prefix}rancher"
+  identifier           = "${var.prefix}rancher"
   username             = "admin"
   password             = var.mysql-password
   parameter_group_name = "default.mysql5.7"
@@ -14,7 +14,7 @@ resource "aws_db_instance" "k3s" {
 }
 
 resource "aws_security_group" "k3s-mysql" {
-  name = "k3sMysql"
+  name = "${var.prefix}-RancherRDS"
 
   ingress {
     description = "MYSQL"
@@ -24,6 +24,6 @@ resource "aws_security_group" "k3s-mysql" {
     security_groups = [aws_security_group.k3s.id]
   }
   tags = {
-    Name = "k3sMysql"
+    Name = "${var.prefix}-RancherRDS"
   }
 }

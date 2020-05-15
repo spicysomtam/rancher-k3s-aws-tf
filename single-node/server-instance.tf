@@ -15,11 +15,12 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "k3s" {
-  ami           = data.aws_ami.ubuntu.id
+  ami = data.aws_ami.ubuntu.id
   instance_type = var.inst-type
   iam_instance_profile = aws_iam_instance_profile.k3s-server.name
   key_name = var.key-pair
   security_groups = [aws_security_group.k3s.name]
+
   user_data = templatefile("server-userdata.tmpl", { 
     pwd = var.mysql-password, 
     host = aws_db_instance.k3s.address, 
@@ -29,6 +30,6 @@ resource "aws_instance" "k3s" {
   depends_on = [ aws_db_instance.k3s, aws_security_group.k3s-mysql ]
 
   tags = {
-    Name = "rancherK3s0"
+    Name = "${var.prefix}-RancherS0"
   }
 }

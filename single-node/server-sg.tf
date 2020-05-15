@@ -1,5 +1,5 @@
 resource "aws_security_group" "k3s" {
-  name        = "k3sServer"
+  name        = "${var.prefix}-RancherServer"
 
  ingress {
     description = "SSH"
@@ -25,6 +25,6 @@ resource "aws_security_group" "k3s" {
   }
 
   tags = {
-    Name = "k3sServer"
+    Name = "${var.prefix}-RancherServer"
   }
 }

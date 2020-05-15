@@ -13,6 +13,12 @@ variable "inst-type" {
   type        = string
 }
 
+variable "prefix" {
+  description = "Prefix for deploy for aws resources`."
+  default     = "r1"
+  type        = string
+}
+
 variable "num-servers" {
   description = "Number of k3s server instances to deploy."
   default = "2"
@@ -38,7 +44,7 @@ variable "ssh-ingress-cidrs" {
 }
 
 variable "key-pair" {
-  default = "my-keypair"
+  default = "my-key-pair"
   type    = string
 }
 
@@ -55,5 +61,5 @@ variable "rancher-helm-repo" {
 }
 
 variable "rancher-dns-name" {
-  default = "rancher.alastair-munro.com"
+  default = "rancher.mydomain.com"
 }

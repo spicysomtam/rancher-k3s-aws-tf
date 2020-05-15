@@ -1,5 +1,5 @@
 resource "aws_lb_target_group" "https" {
-  name     = "rancher-tcp-443"
+  name     = "${var.prefix}-rancher-tcp-443"
   port     = 443
   protocol = "TCP"
   target_type = "instance"

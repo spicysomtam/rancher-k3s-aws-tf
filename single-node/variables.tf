@@ -13,6 +13,12 @@ variable "inst-type" {
   type        = string
 }
 
+variable "prefix" {
+  description = "Prefix for deploy for aws resources`."
+  default     = "r1"
+  type        = string
+}
+
 # Allowing access from everything is probably not secure; so please override this to your requirement.
 variable "rancher-ingress-cidrs" {
   description = "External ips allowed access to rancher."

@@ -1,5 +1,5 @@
 resource "aws_lb" "lb" {
-  name               = "rancher"
+  name               = "${var.prefix}-rancher"
   internal           = var.nlb-internal
   load_balancer_type = "network"
   subnets = data.aws_subnet_ids.default.ids

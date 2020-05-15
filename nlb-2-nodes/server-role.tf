@@ -1,11 +1,11 @@
 
 resource "aws_iam_instance_profile" "k3s-server" {
-  name = "k3sServerProfile"
+  name = "${var.prefix}-RancherServerProfile"
   role = aws_iam_role.k3s-server.name
 }
 
 resource "aws_iam_role" "k3s-server" {
-  name = "k3sServer"
+  name = "${var.prefix}-RancherServer"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -24,7 +24,7 @@ EOF
 }
 
 resource "aws_iam_policy" "k3s-server" {
-  name = "k3sServer"
+  name = "${var.prefix}-RancherServer"
   policy = <<EOF
 {
 "Version": "2012-10-17",

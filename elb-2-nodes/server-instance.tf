@@ -32,6 +32,6 @@ resource "aws_instance" "k3s" {
   depends_on = [ aws_db_instance.k3s, aws_security_group.k3s-mysql ]
 
   tags = {
-    Name = "rancherK3s${count.index}"
+    Name = "${var.prefix}-RancherS${count.index}"
   }
 }
