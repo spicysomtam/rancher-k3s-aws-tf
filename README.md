@@ -6,7 +6,7 @@ Install is based on the rancher instructions [Installing Rancher on a Kubernetes
 
 My plan was to implement a two node k3s configuration behind an AWS load balancer, which is an ideal, minimal k3s configuration with fault tolerance. I also provide a single node deploy, which is perfect for development, etc.
 
-This repo was a starting point for me with rancher kubernetes (although I have worked with Redhat Openshift for several years) and is a simple deployment. I decided to keep this repo as a simple deployment, and create a new repo for a much more functional deploy of k3s kubernetes, which is in my repo [k3s-aws-cluster](https://github.com/spicysomtam/k3s-aws-cluster).
+This repo was a starting point for me with rancher kubernetes (although I have worked with Redhat Openshift kubernetes for several years) and is a simple deployment. I decided to keep this repo as a simple deployment, and create a new repo for a much more functional deploy of k3s kubernetes, which is in my repo [k3s-aws-cluster](https://github.com/spicysomtam/k3s-aws-cluster).
 
 # Issue with an AWS Network Load Balancer and k3s
 
