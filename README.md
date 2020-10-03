@@ -1,6 +1,12 @@
 # Aim
 
-To implement rancher 2.4.3 k3s install on aws using terraform, following the rancher k3s instructions [Installing Rancher on a Kubernetes Cluster](https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/). The instructions say that you should use an AWS Network Load Balancer (NLB), and provides instructions [here](https://rancher.com/docs/rancher/v2.x/en/installation/options/nlb/). My plan was to implement a two node k3s configuration behind an AWS load balancer, which is an ideal, minimal k3s configuration with fault tolerance. I also provide a single node deploy, which is perfect for development, etc.
+To perform a simple install of rancher k3s kubernetes into AWS using terraform and then install the rancher gui (2.4.3). The install will use EC2 instances.
+
+Install is based on the rancher instructions [Installing Rancher on a Kubernetes Cluster](https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/). The instructions say that you should use an AWS Network Load Balancer (NLB), and provides instructions [here](https://rancher.com/docs/rancher/v2.x/en/installation/options/nlb/). After some time I found k3s install instructions [here](https://rancher.com/docs/k3s/latest/en/), which are more straight forward to follow. You may wish to combine the two sets of instructions to fit your needs.
+
+My plan was to implement a two node k3s configuration behind an AWS load balancer, which is an ideal, minimal k3s configuration with fault tolerance. I also provide a single node deploy, which is perfect for development, etc.
+
+This repo was a starting point for me with rancher kubernetes (although I have worked with Redhat Openshift for several years) and is a simple deployment. I decided to keep this repo as a simple deployment, and create a new repo for a much more functional deploy of k3s kubernetes, which is in my repo [k3s-aws-cluster](https://github.com/spicysomtam/k3s-aws-cluster).
 
 # Issue with an AWS Network Load Balancer and k3s
 
